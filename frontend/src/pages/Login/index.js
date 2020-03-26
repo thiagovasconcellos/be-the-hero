@@ -1,21 +1,48 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import {FiLogIn} from 'react-icons/fi';
+import React, { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { FiLogIn } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+
+
+import api from '../../services/api';
 
 import './styles.css';
 
 import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
 
-export default function index() {
+export default function Login() {
+  const [id, setId] = useState('');
+  const history = useHistory();
+
+  async function handleLogin(e) {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('/sessions', { id });
+
+      localStorage.setItem('ongId', id);
+      localStorage.setItem('name', response.data.name);
+
+      history.push('/profile');
+
+    } catch (error) {
+      toast.error(`Erro ao efetuar login: ${error.message}`);
+    }
+  }
+
   return (
     <div className="logon-container">
       <section className="form">
         <img src={logoImg} alt="logo" />
 
-        <form>
+        <form onSubmit={handleLogin}>
           <h1>Efetue o login</h1>
-          <input placeholder="Sua identificação" />
+          <input 
+            placeholder="Sua identificação" 
+            value={id}
+            onChange={e => setId(e.target.value)}
+          />
           <button type="submit" className="button">Entrar</button>
 
           <Link className="back-link" to="/register">
