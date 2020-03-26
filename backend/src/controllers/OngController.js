@@ -12,6 +12,15 @@ module.exports = {
   async store(request, response) {
     const {name, email, whatsapp, city, state} = request.body;
 
+    const ongExists = await connection('ongs')
+      .where('name', name)
+      .select('*')
+      .first();
+      
+    if (ongExists) {
+      return response.send(403, {error: 'This name has already been taken by someone else.'});
+    }
+
     const id = crypto.randomBytes(4).toString('HEX');
 
     await connection('ongs').insert({

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import MaskedInput from 'react-text-mask';
 
 import api from '../../services/api';
 import './styles.css';
@@ -36,10 +37,15 @@ export default function Register() {
       navigator.clipboard.writeText(response.data.id);
       toast.success('ID copiado para a sua área de transferência ;)');  
       history.push('/');
-    } catch (error) {
-      toast.error(`Erro ao criar ONG: ${error}`)
+    } catch (err) {
+      console.log(err.response);
+      toast.error(`Erro ao criar ONG: ${err.response.data.error}`)
     }
 
+  }
+
+  function clearNumberMask(number) {    
+    return String(number.replace(/[^0-9]+/g,''))
   }
 
   return (
@@ -70,11 +76,14 @@ export default function Register() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <input 
-            placeholder="WhatsApp" 
+          <MaskedInput 
+            mask={
+            ['(', /\d/, /\d/, ')',  /\d/, /\d/, '-', /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/,/\d/,/\d/,/\d/ ]
+            }
+            placeholder="WhatsApp (55)xx-x xxxx-xxxx"
             value={whatsapp}
-            onChange={e => setWhatsapp(e.target.value)}
-          />
+            onChange={e => setWhatsapp(clearNumberMask(e.target.value))}
+          />        
 
           <div className="input-group">
             <input 
