@@ -4,9 +4,9 @@ const OngValidateStore = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
     email: Joi.string().required().email(),
-    whatsapp: Joi.number().required().min(11).max(14),
+    whatsapp: Joi.number().required(),
     city: Joi.string().required(),
-    UF: Joi.string().required().length(2),
+    state: Joi.string().required().length(2),
   })
 });
 

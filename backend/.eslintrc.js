@@ -19,6 +19,8 @@ module.exports = {
     "no-console": "off",
     "func-names": "off",
     "camelcase": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "no-underscore-dangle": "off"
   },
 };

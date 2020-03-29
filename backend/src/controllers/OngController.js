@@ -1,5 +1,6 @@
-const crypto = require('crypto');
 const connection = require('../database/connection');
+
+const generateUniqueId = require('../utils/GenerateUniqueId');
 
 
 module.exports = {
@@ -22,7 +23,7 @@ module.exports = {
       return response.send(403, {error: 'This name has already been taken by someone else.'});
     }
 
-    const id = crypto.randomBytes(4).toString('HEX');
+    const id = generateUniqueId();
 
     await connection('ongs').insert({
     id,
