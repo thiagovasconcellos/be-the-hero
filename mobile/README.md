@@ -5,6 +5,6 @@
   <img width="460" height="400" src="https://i.ibb.co/nLDMy5C/heroes.png">
 </p>
 
-## How does it feel to be a hero? (Frontend)
+## How does it feel to be a hero? (Mobile)
 
 This is a full stack project covering backend, frontend and a mobile application with a noble purpose: Bring together people who needs help and those wanting to help.
